@@ -1,7 +1,7 @@
-Attribute VB_Name = "MÛdulo3"
+Attribute VB_Name = "Module001"
 Sub IE03_MB52()
-'essa macro È executada atravÈs de um script python
-'automaÁ„o da extraÁ„o do relatÛrio de equipamentos e de estoque
+'essa macro √© executada atrav√©s de um script python
+'automa√ß√£o da extra√ß√£o do relat√≥rio de equipamentos e de estoque
 
 Application.ScreenUpdating = False
 
@@ -32,7 +32,7 @@ Application.ScreenUpdating = False
         obras(6) = "A345"
         obras(7) = "A347"
         
-        'lista de verificaÁ„o de qual obra ser· atualizada
+        'lista de verifica√ß√£o de qual obra ser√° atualizada
         
         Dim validador_obras(7) As String
         validador_obras(0) = False
@@ -44,7 +44,7 @@ Application.ScreenUpdating = False
         validador_obras(6) = False
         validador_obras(7) = False
         
-        '################################################ LOOP PARA ATUALIZAR OS FORMUL¡RIOS DE OBRAS ATIVAS ################################################
+        '################################################ LOOP PARA ATUALIZAR OS FORMUL√ÅRIOS DE OBRAS ATIVAS ################################################
         For i = 0 To 7
             If validador_obras(i) = True Then
                 Set workb = ThisWorkbook
@@ -60,7 +60,7 @@ Application.ScreenUpdating = False
                 session.findById("wnd[0]/tbar[0]/okcd").Text = "/NIE03"
                 session.findById("wnd[0]").sendVKey 0
                 session.findById("wnd[0]").sendVKey 4
-                'se for a 331, buscar todas as divisıes ativas com equipamentos
+                'se for a 331, buscar todas as divis√µes ativas com equipamentos
                 If obras(i) = "A331" Then
                     session.findById("wnd[0]/usr/ctxtGSBER-LOW").Text = ""
                     session.findById("wnd[0]/usr/btn%_GSBER_%_APP_%-VALU_PUSH").press
@@ -83,7 +83,7 @@ Application.ScreenUpdating = False
                 ActiveWindow.WindowState = xlMaximized
                 Sheets("IE03").Select
                 
-                'filtrar os itens que n„o s„o equipamentos (BA, CAP, CX, DIF, GD, MD, PN, TQ, TR)
+                'filtrar os itens que n√£o s√£o equipamentos (BA, CAP, CX, DIF, GD, MD, PN, TQ, TR)
                 
                 Range("C1").Select
                 Selection.End(xlDown).Select
@@ -114,7 +114,7 @@ Application.ScreenUpdating = False
                 
                 '###################################################################################################
                 
-                'abrir o arquivo do formul·rio XLSForm - ODK
+                'abrir o arquivo do formul√°rio XLSForm - ODK
                 
                 Workbooks.Open "G:\Meu Drive\Teste_ODK\Forms\" & obra & "\Form-Apontamento-" & obra & ".xlsx"
                 Set workb01 = ActiveWorkbook
@@ -126,7 +126,7 @@ Application.ScreenUpdating = False
                 Cells(1, 1).Value = "list name"
                 Cells(1, 2).Value = "name"
                 Cells(1, 3).Value = "label::English"
-                'copiar dados do relatÛrio SAP
+                'copiar dados do relat√≥rio SAP
                 workb.Sheets("IE03").Range("B2:D2000").Copy Destination:=workb01.Sheets("choices").Range("B2")
                 
                 'formatar equipamentos
@@ -156,7 +156,7 @@ Application.ScreenUpdating = False
                     Cells(linha, 1).Value = "choices_ZPM005-Apontamento-" & obra & "_Prefixo_do_Equipamento"
                 Next
                 
-                'informar a choice do combustÌvel
+                'informar a choice do combust√≠vel
                 
                 linha = linha + 1
                 Cells(linha, 1).Value = "choices_ZPM005-Apontamento-" & obra & "_Tipo_Combustivel"
@@ -198,7 +198,7 @@ Application.ScreenUpdating = False
                 '################### MB52 ########################
                 
                 Dim arr_materiais(141) As String
-                'lista de todos os materiais de estoque de lubrificaÁ„o/graxa
+                'lista de todos os materiais de estoque de lubrifica√ß√£o/graxa
                     arr_materiais(0) = 8881
                     arr_materiais(1) = 8882
                     arr_materiais(2) = 8883
@@ -348,7 +348,7 @@ Application.ScreenUpdating = False
                  
                 session.findById("wnd[0]/tbar[0]/okcd").Text = "/NMB52"
                 session.findById("wnd[0]").sendVKey 0
-                'se for A331, buscar todas as divisıes com estoque
+                'se for A331, buscar todas as divis√µes com estoque
                 If obras(i) = "A331" Then
                     session.findById("wnd[0]/usr/btn%_WERKS_%_APP_%-VALU_PUSH").press
                     session.findById("wnd[1]/usr/tabsTAB_STRIP/tabpSIVA/ssubSCREEN_HEADER:SAPLALDB:3010/tblSAPLALDBSINGLE/ctxtRSCSEL_255-SLOW_I[1,0]").Text = "A331"
@@ -378,7 +378,7 @@ Application.ScreenUpdating = False
                 session.findById("wnd[1]/usr/ctxtDY_FILENAME").Text = "MB52_" & obra & "_" & data_hj & ".XLSX"
                 nome_mb52 = session.findById("wnd[1]/usr/ctxtDY_FILENAME").Text
                 session.findById("wnd[1]/tbar[0]/btn[0]").press
-                'puxar o relatÛrio em funÁ„o da lista de insumos a ser enviada pelo CIL
+                'puxar o relat√≥rio em fun√ß√£o da lista de insumos a ser enviada pelo CIL
                 On Error Resume Next
                 Workbooks.Open "G:\Meu Drive\Teste_ODK\exports_SAP\" & obra & "\MB52_" & obra & "_" & data_hj & ".XLSX"
                     For Each wb In Application.Workbooks
@@ -408,16 +408,16 @@ Application.ScreenUpdating = False
         
                  '####################### TIPOS DE APONTAMENTOS ##########################
                 
-                'REPOSI«√O, REPARO MEC¬NICO, TROCA
+                'REPOSI√á√ÉO, REPARO MEC√ÇNICO, TROCA
         
                 '##########################################################################
                 
-                'inserir os tipos de reposiÁ„o
+                'inserir os tipos de reposi√ß√£o
         
                 linha = linha_final + 1
                 Dim tipo(2) As String
-                tipo(0) = "ReposiÁ„o"
-                tipo(1) = "Reparo Mec‚nico"
+                tipo(0) = "Reposi√ß√£o"
+                tipo(1) = "Reparo Mec√¢nico"
                 tipo(2) = "Troca"
                 Dim abr_tipo(2) As String
                 abr_tipo(0) = "R -> "
@@ -435,7 +435,7 @@ Application.ScreenUpdating = False
                     linha = linha + 1
                 Next
                 
-                'salvar o formul·rio
+                'salvar o formul√°rio
                 workb01.Close savechanges:=True
                 workb02.Close savechanges:=True
             End If
