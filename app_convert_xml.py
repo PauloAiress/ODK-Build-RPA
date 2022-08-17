@@ -28,12 +28,12 @@ class ChromeInit:
                                                          #this will be the standard download path while running this script
         self.chrome.execute_cdp_cmd('Page.setDownloadBehavior', params)
 
-    def botao_encontrar_arquivo(self, division):
-        divisao = division[-3:]
+    def chose_file_btn(self):
         try:
             esc_arquivo = self.chrome.find_element(By.ID, 'id_file')
             esc_arquivo.send_keys(
-                r'G:\Meu Drive\Teste_ODK\Forms' + obra + r'\Form-Apontamento-' + divisao + '.xlsx')
+                r'G:\Drive\ODK\Forms\Form_001.xlsx') #replace this path with your own computer path
+                                                           #this will be the standard path where you'll save xlsforms
         except Exception as e:
             print(e)
 
@@ -60,20 +60,20 @@ class ChromeInit:
 
 class Excel:
     def __init__(self):
-        # Essa função vai abrir o excel e executar a macro
+        # This section will open Excel application
         self.xls = win32com.client.Dispatch("Excel.Application")
 
     def close_excel(self):
-        #fechar o excel
+        #close excel
         self.xls.Quit()
 
 class Sap:
+    #setting up an opened SAP window, just for closing in the end of the script
     def __init__(self):
         try:            
             SapGuiAuto = win32com.client.GetObject('SAPGUI')
             if not type(SapGuiAuto) == win32com.client.CDispatch:
                 return
-            
             App = SapGuiAuto.GetScriptingEngine
             if not type(App) == win32com.client.CDispatch:
                 SapGuiAuto = None
@@ -90,28 +90,24 @@ class Sap:
             print(sys.exc_info()[0])
 
     def exit(self):
-        # Essa função vai fechar o SAP
+        #This function closes SAP
         self.session.findById("wnd[0]/tbar[0]/okcd").Text = "/NEX"
         self.session.findById("wnd[0]").sendVKey(0)
 
 if __name__ == '__main__':
     sap = Sap()
     excel = Excel()
-    obras = [r'\329', r'\331', r'\339', r'\341', r'\342', r'\343', r'\345', r'\347']
-    validador_obras = [False, True, False,
-                       True, False,  False,  False,  False, ]
-    for i in range(8):
-        if validador_obras[i]:
-            chrome = ChromeInit(obras[i])
-            chrome.acess("https://xlsform.getodk.org")
-            sleep(2)
-            chrome.botao_encontrar_arquivo(obras[i])
-            sleep(2)
-            chrome.submit_btn_click()
-            sleep(2)
-            chrome.download_XMLForm()
-            sleep(3)
-            chrome.exit()
+    chrome = ChromeInit()
+    
+    chrome.acess("https://xlsform.getodk.org")
+    sleep(2)
+    chrome.chose_file_btn()
+    sleep(2)
+    chrome.submit_btn_click()
+    sleep(2)
+    chrome.download_XMLForm()
+    sleep(3)
+    chrome.exit()
     sleep(1)
     excel.close_excel()
     sleep(1)
