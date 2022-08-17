@@ -22,8 +22,8 @@ class Sap:
             if not type(App) == win32com.client.CDispatch:
                 SapGuiAuto = None
                 return
-            # trocar DESCRIÇÃO pelo nome da conexão
-            connection = App.OpenConnection("PRD - Produtivo", True)
+            # replace connection with yout connection name
+            connection = App.OpenConnection("Connection", True)
             
             if not type(connection) == win32com.client.CDispatch:
                 App = None
@@ -41,10 +41,10 @@ class Sap:
             print(sys.exc_info()[0])
             
     def saplogin(self):
-        # essa função vai logar no SAP
-        # trocar usuário e senha pelo seu usuário e senha
-        self.session.findById("wnd[0]/usr/txtRSYST-BNAME").text = "pauloos"
-        self.session.findById("wnd[0]/usr/pwdRSYST-BCODE").text = "una234"
+        # this function signs in on SAP
+        # replace user and password
+        self.session.findById("wnd[0]/usr/txtRSYST-BNAME").text = "user"
+        self.session.findById("wnd[0]/usr/pwdRSYST-BCODE").text = "password"
         self.session.findById("wnd[0]").sendVKey(0)
 
 class Excel:
