@@ -1,4 +1,4 @@
-# configuração padrão para webscraping
+# RPA routine for convert ODK xls form in ODK xml form
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from time import sleep
@@ -6,7 +6,9 @@ import win32com.client
 import sys
 
 class ChromeInit:
-    def __init__(self, obra):
+    #setup chrome
+    def __init__(self):
+        #webdriver and this script should be in the same folder 
         self.driver_path = "./chromedriver.exe"
         self.options = webdriver.ChromeOptions()
         self.options.add_argument(
@@ -22,11 +24,12 @@ class ChromeInit:
             options=self.options
         )
         params = {'behavior': 'allow',
-                  'downloadPath': r"G:\Meu Drive\Teste_ODK\XML" + obra}
+                  'downloadPath': r"G:\Drive\Teste\XML"} #replace this path with your own computer path
+                                                         #this will be the standard download path while running this script
         self.chrome.execute_cdp_cmd('Page.setDownloadBehavior', params)
 
-    def botao_encontrar_arquivo(self, obra):
-        divisao = obra[-3:]
+    def botao_encontrar_arquivo(self, division):
+        divisao = division[-3:]
         try:
             esc_arquivo = self.chrome.find_element(By.ID, 'id_file')
             esc_arquivo.send_keys(
