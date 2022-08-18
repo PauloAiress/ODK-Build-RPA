@@ -5,8 +5,8 @@ These are RPA (robotic process automation) routines for extract data from SAP, t
 ## App log and run macro:
 app_log_n_run_macro.py is a python script used for signing in SAP and run a excel macro saved in module 001.
 
-## Module 001:
-Module001.bas is a excel VBA script used for:
+## SAP Tcodes IE03 and MB52:
+sap_IE03_MB52.bas is a excel VBA script used for:
  - access SAP;
  - export IE03 report (IE03 is used to display a list of equipments);
  - export MB52 report (MB52 is used to display warehouse stocks of material);
