@@ -1,11 +1,11 @@
-Attribute VB_Name = "Module001"
+Attribute VB_Name = "sap_IE03_MB52"
 Sub IE03_MB52()
-'essa macro é executada através de um script python
-'automação da extração do relatório de equipamentos e de estoque
+        'this vba script is executed by a python script 
+        'RPA for report extraction of heavy equipament/machinery and warehouse stocks of material
 
 Application.ScreenUpdating = False
 
-        '############### SETAR O SAP ##################
+        '############### setting up SAP ##################
         
         If Not IsObject(SAP) Then
            Set SapGuiAuto = GetObject("SAPGUI")
